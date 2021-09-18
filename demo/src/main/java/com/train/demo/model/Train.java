@@ -11,19 +11,20 @@ public class Train {
 
     @Column
     private String Name;
+    @Column(length = 10000)
     private String Description;
-    @Column
-    private String Distance;
-    @Column
+    @Column(name="distance_between_stop")
+    private String distance;
+    @Column(name="max_speed")
     private String Speed;
-    @Column
+    @Column(name="sharing_tracks")
     private boolean sharingTrack;
-    @Column
+    @Column(name="grade_crossing")
     private boolean GradeCrossing;
-    @Column
+    @Column(name="train_frequency")
     private String Frequency;
     @Column
-    private String Aminities;
+    private String amenities;
 
 
     public Train(long id, String name) {
