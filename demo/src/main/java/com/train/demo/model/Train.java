@@ -1,6 +1,8 @@
 package com.train.demo.model;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Scanner;
 
 @Entity
 public class Train {
@@ -26,7 +28,12 @@ public class Train {
     @Column
     private String amenities;
 
+    private String errorMsg;
+
+    public static HashMap<String, String> hasMapColumn = new HashMap<>();
+
     public Train(long id, String name, String description, String distance, String speed, boolean sharingTrack, boolean gradeCrossing, String frequency, String amenities) {
+        super();
         this.id = id;
         this.name = name;
         this.description = description;
@@ -39,6 +46,9 @@ public class Train {
     }
 
     public Train() {
+        hasMapColumn.put("max-speed", "speed");
+        hasMapColumn.put("id", "id");
+        hasMapColumn.put("name", "name");
     }
 
     public long getId() {
@@ -73,8 +83,8 @@ public class Train {
         this.distance = distance;
     }
 
-    public String getSpeed() {
-        return speed;
+    public int getSpeed() {
+        return new Scanner(speed).useDelimiter("\\D+").nextInt(); //get firs speed from whole string
     }
 
     public void setSpeed(String speed) {
