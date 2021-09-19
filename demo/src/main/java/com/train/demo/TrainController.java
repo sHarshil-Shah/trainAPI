@@ -3,6 +3,8 @@ package com.train.demo;
 import com.train.demo.Repository.TrainRepository;
 import com.train.demo.Service.ITrainService;
 import com.train.demo.model.Train;
+import com.train.demo.payload.response.MessageResponse;
+import com.train.demo.payload.response.TrainsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,17 +15,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-//@RequestMapping("/api/trains")
+@RequestMapping("/api")
 public class TrainController {
     @Autowired
     public ITrainService service;
@@ -43,9 +44,9 @@ public class TrainController {
         return Sort.Direction.ASC;
     }
 
-    @RequestMapping("/api/trains")
+    @GetMapping("/trains")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<Train>> getTrains (@RequestParam(defaultValue = "id, desc") String[] sort,
+    public ResponseEntity<?> getTrains (@RequestParam(defaultValue = "id, desc") String[] sort,
                                                   @RequestParam(defaultValue = "0") int page,
                                                   @RequestParam(defaultValue = "3") int size
                                                   )
@@ -57,14 +58,18 @@ public class TrainController {
                 for (String sortColumns : sort) {
                     String[] _sortCheck = sortColumns.split(",");
                     if (!Train.hasMapColumn.containsKey(_sortCheck[0])) {
-                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                        return ResponseEntity
+                                .badRequest()
+                                .body(new MessageResponse("Invalid Parameter"));
                     }
                 }
             }
             else
             {
                 if (!Train.hasMapColumn.containsKey(sort[0])) {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                    return ResponseEntity
+                            .badRequest()
+                            .body(new MessageResponse("Invalid Parameter"));
                 }
             }
             List<Sort.Order> orders = new ArrayList<Sort.Order>();
@@ -89,11 +94,13 @@ public class TrainController {
             Page<Train> pageTrain = trainRepository.findAll(pagingSort);
 
             List<Train> trains = pageTrain.getContent();
-            return new ResponseEntity<>(trains, HttpStatus.OK);
+            return ResponseEntity.ok(new TrainsResponse(trains, size, page));
         } catch (Exception ex) {
             System.out.println(ex);
             List<Train> trains = new ArrayList<>();
-            return new ResponseEntity<>(trains, HttpStatus.BAD_REQUEST);
-        }
+            return
+                    ResponseEntity
+                            .badRequest()
+                            .body(new MessageResponse("Invalid Parameter"));}
     }
 }
