@@ -10,10 +10,10 @@ public class TrainsResponse {
     int totalPages;
     int currentPage;
 
-    public TrainsResponse(List<Train> trains, int pageSize, int currentPage) {
+    public TrainsResponse(List<Train> trains, int pageSize, int currentPage, double totalTrainCount) {
         this.trains = trains;
         this.totalItems = trains.size();
-        this.totalPages = (int)Math.ceil(trains.size()/pageSize);
+        this.totalPages = (int)Math.ceil(totalTrainCount/pageSize);
         this.currentPage = currentPage;
     }
 

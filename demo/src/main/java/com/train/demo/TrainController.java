@@ -94,7 +94,8 @@ public class TrainController {
             Page<Train> pageTrain = trainRepository.findAll(pagingSort);
 
             List<Train> trains = pageTrain.getContent();
-            return ResponseEntity.ok(new TrainsResponse(trains, size, page));
+            double trainCount = trainRepository.count();
+            return ResponseEntity.ok(new TrainsResponse(trains, size, page, trainCount));
         } catch (Exception ex) {
             System.out.println(ex);
             List<Train> trains = new ArrayList<>();
