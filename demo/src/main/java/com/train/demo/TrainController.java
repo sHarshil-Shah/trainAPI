@@ -4,6 +4,9 @@ import com.train.demo.Repository.TrainRepository;
 import com.train.demo.Service.ITrainService;
 import com.train.demo.model.Train;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,16 +43,27 @@ public class TrainController {
     }
 
     @RequestMapping("/api/trains")
-    public ResponseEntity<List<Train>> GetTrains (@RequestParam(defaultValue = "id, asc") String[] sort)
+    public ResponseEntity<List<Train>> getTrains (@RequestParam(defaultValue = "id, desc") String[] sort,
+                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "3") int size
+                                                  )
     {
         try {
             ///TODO: Custom error message when invalid parameter
-            for (String sortColumns : sort) {
+            if (sort[0].contains(",")) {
+                for (String sortColumns : sort) {
                     String[] _sortCheck = sortColumns.split(",");
                     if (!Train.hasMapColumn.containsKey(_sortCheck[0])) {
                         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                     }
                 }
+            }
+            else
+            {
+                if (!Train.hasMapColumn.containsKey(sort[0])) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+            }
             List<Sort.Order> orders = new ArrayList<Sort.Order>();
             if (sort[0].contains(",")) {
                 for (String sortOrder : sort) {
@@ -57,10 +71,6 @@ public class TrainController {
                     if (Train.hasMapColumn.containsKey(_sort[0])) {
                         _sort[0] = Train.hasMapColumn.get(_sort[0]);
                     }
-//                if (_sort[0].equals("max-speed"))
-//                {
-//                    _sort[0] = "speed";
-//                }
                     orders.add(new Sort.Order(getSortDirection(_sort[1]), _sort[0]));
                 }
             }
@@ -72,7 +82,10 @@ public class TrainController {
                 orders.add(new Sort.Order(getSortDirection(sort[1]), sort[0]));
             }
             System.out.println(orders);
-            List<Train> trains = trainRepository.findAll(Sort.by(orders));
+            Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
+            Page<Train> pageTrain = trainRepository.findAll(pagingSort);
+
+            List<Train> trains = pageTrain.getContent();
             return new ResponseEntity<>(trains, HttpStatus.OK);
         } catch (Exception ex) {
             System.out.println(ex);
