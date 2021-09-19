@@ -1,38 +1,3 @@
---with customer_json (doc) as (
---   values
---    ('[
---      {
---        "id": 3,
---        "name": "Jerry Green",
---        "aminities": "Imported from facebook.",
---        "distance": "Imported from facebook.",
---        "description": "Imported from facebook.",
---        "frequency": "Imported from facebook.",
---        "grade_crossing": true,
---        "speed": "Imported from facebook.",
---        "sharing_track": false
---      },
---      {
---        "id": 4,
---                "name": "Jerry Green2",
---                "aminities": "Imported from facebook.",
---                "distance": "Imported from facebook.",
---                "description": "Imported from facebook.",
---                "frequency": "Imported from facebook.",
---                "grade_crossing": true,
---                "speed": "Imported from facebook.",
---                "sharing_track": false
---      }
---    ]'::json)
---)
---insert into Train( id, name, aminities, distance, description, frequency, grade_crossing, speed, sharing_track)
---select p.*
---from customer_json l
---  cross join lateral json_populate_recordset(null::train, doc) as p
---on conflict (id) do update
---  set name = excluded.name,
---      comment = excluded.comment;
-
 INSERT INTO public.train(id,name,description,distance_between_stop,max_speed,sharing_tracks,grade_crossing,train_frequency,amenities) VALUES (1,'Light rail','Light rail, which might be also known as trolley and streetcars, mean trains that function as local transit in an urban_core and can operate on the street_level. Compared to rapid transit, light rail costs less, is more pedestrian friendly, but has less passenger capacity. The major advantage with light rail is that it can operate like rapid transit or like local buses, depending on the available infrastructure','a few blocks to 1 or 2 miles','55_65 mph','true','false','3_30 minutes','n/a');
 INSERT INTO public.train(id,name,description,distance_between_stop,max_speed,sharing_tracks,grade_crossing,train_frequency,amenities) VALUES (2,'Rapid transit','Rapid transit, which is also known as metro, subway, and heavy rail, mean trains that generally serve the urban_core, have large passenger capacity, and operate totally separate from road traffic. In order to run separately from road traffic in the city_core, rapid transit trains would run either above or underground.','1/2 mile to 2 or 3 miles','65_70 mph','false','false','3_20 minutes','Large space for standees');
 INSERT INTO public.train(id,name,description,distance_between_stop,max_speed,sharing_tracks,grade_crossing,train_frequency,amenities) VALUES (3,'Commuter rail','Commuter trains generally mean trains connecting suburban areas with the central city and primarily serves riders to and from work. Commuter trains typically run on weekdays, during rush hours, and only in the peak directions.','1 to 2 miles','79 mph','true','true','15 minutes to hourly (some operate only during weekday peak hours)','Restroom');

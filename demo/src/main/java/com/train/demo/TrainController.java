@@ -52,8 +52,6 @@ public class TrainController {
                                                   )
     {
         try {
-            ///TODO: Custom error message when invalid parameter
-            ///TODO: What if parameter name is invalid other then these three
             if (sort[0].contains(",")) {
                 for (String sortColumns : sort) {
                     String[] _sortCheck = sortColumns.split(",");
