@@ -80,4 +80,17 @@ We have some parameters defined to get the data. Sort, Page, Size. You can sort 
 
 For Security, we are converting password to BCrypt Password Encoder. 
 
-### NOTE: Usage of this API can be found in trainAPI.postman_collection.json 
+### NOTE: Usage of this API can be found in trainAPI.postman_collection.json
+
+
+# Steps to run the project
+
+1. Unzip trainAPI.zip
+2. Open IntelIJ
+3. Import Existing Project
+4. For the Import project from external model value, select Maven and click Finish.
+5. Click on pom.xml and click build
+6. Go to <path>\trainAPI\demo\src\main\java\com\train\demo\DemoApplication.java
+7. Click on run button next to DemoApplication class (Check screenshot in attched .pdf file)
+8. check API connectivity via calling localhost:8080/api/test/all
+9. It should return "Public Content."
