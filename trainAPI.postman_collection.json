@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "cbf7a967-a491-4223-881e-7c9fa0a7f706",
+		"name": "trainAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "test Public",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/test/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"test",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMjA3MDkyNiwiZXhwIjoxNjMyMTU3MzI2fQ.eia7FX5Z3o4tvA0QEM9qVW0ZSS6ppmvwXPMyNyer3_2PjDRfTFKe42gYAuMEzIarCX4LlyXSS4Xx9vGWnwFViQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/test/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"test",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user sign up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"harshil1\",\r\n    \"email\":\"harshil1@pass.com\",\r\n    \"password\":\"password1\",\r\n    \"role\":[\"ADMIN\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user sign in",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\":\"password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/signin",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check sign in",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMjA3MDkyNiwiZXhwIjoxNjMyMTU3MzI2fQ.eia7FX5Z3o4tvA0QEM9qVW0ZSS6ppmvwXPMyNyer3_2PjDRfTFKe42gYAuMEzIarCX4LlyXSS4Xx9vGWnwFViQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"harshil\",\r\n    \"password\":\"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/trains?page=1&size=5&sort=max-speed,desc&sort=name,asc",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"trains"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "sort",
+							"value": "max-speed,desc"
+						},
+						{
+							"key": "sort",
+							"value": "name,asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sort by other ERROR",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMjA3MDIyMywiZXhwIjoxNjMyMTU2NjIzfQ.CMelOKbcSMLeIDk5eykeoMDAIC2XMo1Hogs2_8WvgI3yZjw5kvk0M6sfiV7OlWEdQCdLiWCyFSuyuQfgY0xgKg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/trains?sort=aminities,desc",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"trains"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "aminities,desc"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
