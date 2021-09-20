@@ -12,7 +12,7 @@ public class TrainsResponse {
 
     public TrainsResponse(List<Train> trains, int pageSize, int currentPage, double totalTrainCount) {
         this.trains = trains;
-        this.totalItems = trains.size();
+        this.totalItems = (int)totalTrainCount;
         this.totalPages = (int)Math.ceil(totalTrainCount/pageSize);
         this.currentPage = currentPage;
     }
