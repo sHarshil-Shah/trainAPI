@@ -25,9 +25,10 @@ jobs:
     - name: Build & push Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        image: harshil99/train
+        image: ${{ secrets.DOCK_USER }}/train
         tags: latest
         registry: docker.io
-        dockerfile: ./demo/Dockerfile
+        working-directory: ./demo
+        dockerfile: Dockerfile
         username: ${{ secrets.DOCK_USER }}
         password: ${{ secrets.DOCK_PASS }}
