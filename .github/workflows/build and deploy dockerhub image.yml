@@ -30,6 +30,7 @@ jobs:
         image: ${{ secrets.DOCK_USER }}/train
         tags: latest
         registry: docker.io
-        dockerfile: ./demo/Dockerfile
+        working-directory: ./demo
+        dockerfile: Dockerfile
         username: ${{ secrets.DOCK_USER }}
         password: ${{ secrets.DOCK_PASS }}
