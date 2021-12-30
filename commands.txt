@@ -1,24 +1,17 @@
 sudo yum install git-all
 git clone https://github.com/sHarshil-Shah/trainAPI.git
 
-/*
-sudo yum install \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o docker-archive-keyring.gpg
-
- echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt-get install docker-ce docker-ce-cli containerd.io
-*/
-
 sudo yum install docker
 sudo service docker start
-cd /home/ec2-user/trainAPI/demo
 sudo chmod 666 /var/run/docker.sock
-docker build -t trainAPI .
+sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
+sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
+sudo yum install -y apache-maven
+cd /home/ec2-user/trainAPI/demo
+mvn clean package
+docker build -t train .
+docker pull harshil99/train
+docker run -p 8081:8080 train
+
+delete all containers:
+docker rm $(docker ps -a -f status=exited -q)
