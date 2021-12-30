@@ -54,6 +54,13 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: '1.8'
+       # Step that does that actual cache save and restore
+#     - uses: actions/cache@v1
+#       with:
+#         path: ~/.m2/repository
+#         key: ${{ runner.os }}-maven-${{ hashFiles('**/demo/pom.xml') }}
+#         restore-keys: |
+#           ${{ runner.os }}-maven-
     - name: Build with Maven
       working-directory: ./demo
       run: mvn clean install
@@ -78,7 +85,7 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build demo -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build demo -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG 
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
