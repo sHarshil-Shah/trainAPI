@@ -8,11 +8,11 @@ https://hub.docker.com/r/harshil99/train
 
 ### Get it up and running on local device
 #### Run following command on terminal
-sudo yum install docker -y
-sudo service docker start
-sudo chmod 666 /var/run/docker.sock
-docker pull harshil99/train
-docker run -d -p 8081:8080 harshil99/train
+1. sudo yum install docker -y
+2. sudo service docker start
+3. sudo chmod 666 /var/run/docker.sock
+4. docker pull harshil99/train
+5. docker run -d -p 8081:8080 harshil99/train
 
 
 
