@@ -33,7 +33,6 @@ on:
 
 env:
   AWS_REGION: ap-south-1                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: train           # set this to your Amazon ECR repository name
   ECS_SERVICE: Train-Service                 # set this to your Amazon ECS service name
   ECS_CLUSTER: Train-Cluster                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: ./taskdefinition.json # set this to the path to your Amazon ECS task definition
@@ -55,12 +54,12 @@ jobs:
       with:
         java-version: '1.8'
        # Step that does that actual cache save and restore
-#     - uses: actions/cache@v1
-#       with:
-#         path: ~/.m2/repository
-#         key: ${{ runner.os }}-maven-${{ hashFiles('**/demo/pom.xml') }}
-#         restore-keys: |
-#           ${{ runner.os }}-maven-
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/demo/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
     - name: Build with Maven
       working-directory: ./demo
       run: mvn clean install
@@ -80,6 +79,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: train
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and
