@@ -1,14 +1,16 @@
-sudo yum install git-all
-git clone https://github.com/sHarshil-Shah/trainAPI.git
-
 sudo yum install docker -y
 sudo service docker start
 sudo chmod 666 /var/run/docker.sock
 docker pull harshil99/train
 docker run -d -p 8081:8080 harshil99/train
 
+Notes:
+
 delete all containers:
 docker rm $(docker ps -a -f status=exited -q)
 
 delete all images:
 docker rmi $(docker images -a)
+
+remove dir from git but not from local
+git rm -r --cached myFolder
