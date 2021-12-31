@@ -1,5 +1,21 @@
 # trainAPI
 
+### Check out online
+http://65.1.105.69:8081/swagger-ui/
+
+### Public docker image
+https://hub.docker.com/r/harshil99/train
+
+### Get it up and running on local device
+#### Run following command on terminal
+sudo yum install docker -y
+sudo service docker start
+sudo chmod 666 /var/run/docker.sock
+docker pull harshil99/train
+docker run -d -p 8081:8080 harshil99/train
+
+
+
 ### Prerequisite
 
 1. JDK 1.8 and above

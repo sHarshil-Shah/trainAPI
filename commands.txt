@@ -1,17 +1,14 @@
 sudo yum install git-all
 git clone https://github.com/sHarshil-Shah/trainAPI.git
 
-sudo yum install docker
+sudo yum install docker -y
 sudo service docker start
 sudo chmod 666 /var/run/docker.sock
-sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
-sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
-sudo yum install -y apache-maven
-cd /home/ec2-user/trainAPI/demo
-mvn clean package
-docker build -t train .
 docker pull harshil99/train
-docker run -p 8081:8080 train
+docker run -d -p 8081:8080 harshil99/train
 
 delete all containers:
 docker rm $(docker ps -a -f status=exited -q)
+
+delete all images:
+docker rmi $(docker images -a)
