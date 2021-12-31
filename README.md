@@ -15,6 +15,10 @@ docker pull harshil99/train
 docker run -d -p 8081:8080 harshil99/train
 
 
+### CI pipeline
+1. build with Maven
+2. upload to public Docker repo
+
 
 ### Prerequisite
 
